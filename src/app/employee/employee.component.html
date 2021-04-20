@@ -1,0 +1,108 @@
+<nav>
+    <div class="nav nav-tabs" id="nav-tab" role="tablist">
+      <a class="nav-item nav-link active" id="nav-show-tab" data-toggle="tab" href="#nav-show" role="tab" aria-controls="nav-show" aria-selected="true">Show Employees</a>
+      <a class="nav-item nav-link" id="nav-insert-tab" data-toggle="tab" href="#nav-insert" role="tab" aria-controls="nav-insert" aria-selected="false">Insert Employees</a>
+      <a class="nav-item nav-link" id="nav-update-tab" data-toggle="tab" href="#nav-update" role="tab" aria-controls="nav-update" aria-selected="false">Update / Delete</a>
+    </div>
+  </nav>
+  <div class="tab-content container" id="nav-tabContent">
+    <div class="tab-pane fade show active" id="nav-show" role="tabpanel" aria-labelledby="nav-show-tab">
+        <div class="row">
+            <mat-spinner *ngIf="!totalData"></mat-spinner>
+            <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 mt-10" *ngFor="let employee of totalData; let i = index">
+                <mat-card>
+                    <mat-card-header>
+                        <mat-card-title>{{ employee.first_name }} {{ employee.last_name }}</mat-card-title>
+                    </mat-card-header>
+                    <mat-card-content>
+                        <p>Company: {{ employee.company }}</p>
+                        <p>Email: {{ employee.email }}</p>
+                    </mat-card-content>
+                </mat-card>
+            </div>
+        </div>
+    </div>
+    <div class="tab-pane fade" id="nav-insert" role="tabpanel" aria-labelledby="nav-insert-tab">
+        <form [formGroup]="newEmployeeForm" (ngSubmit)="postData()">
+            <div class="form-group">
+                <label for="updateInputFirstName">First Name</label>
+                <input type="name" name="first" class="form-control" formControlName="first_name" id="updateInputFirstName" placeholder="First Name" required>
+            </div>
+            <div class="form-group">
+                <label for="updateInputLastName">Last Name</label>
+                <input type="name" name="last" class="form-control" formControlName="last_name" id="updateInputFirstName" placeholder="Last Name" required>
+            </div>
+            <div class="form-group">
+                <label for="updateInputCompany">Company</label>
+                <input type="name" name="company" class="form-control" formControlName="company" id="updateInputCompany" placeholder="Company" required>
+            </div>
+            <div class="form-group">
+                <label for="updateInputEmail1">Email address</label>
+                <input type="email" name="email" class="form-control" formControlName="email" id="updateInputEmail1" aria-describedby="emailHelp" placeholder="Enter email" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+          </form>
+    </div>
+    <div class="tab-pane fade" id="nav-update" role="tabpanel" aria-labelledby="nav-update-tab">
+            <div class="row">
+                    <mat-spinner *ngIf="!totalData"></mat-spinner>
+                    <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 mt-10" *ngFor="let employee of totalData; let i = index">
+                        <mat-card>
+                            <mat-card-header>
+                                <mat-card-title>{{ employee.first_name }} {{ employee.last_name }}</mat-card-title>
+                            </mat-card-header>
+                            <mat-card-content>
+                                <p>Company: {{ employee.company }}</p>
+                                <p>Email: {{ employee.email }}</p>
+                            </mat-card-content>
+                            <mat-card-actions>
+                                <!-- Button trigger modal -->
+                                <button type="button" class="btn btn-primary" (click)="currentId(employee)" data-toggle="modal" data-target="#updateModal">
+                                    Update
+                                </button>
+                                <button mat-button class="btn btn-danger" (click)="deleteData(employee.id)">Delete Employee</button>
+                            </mat-card-actions>
+                        </mat-card>
+                    </div>
+                </div>
+                
+                
+                <!-- Modal -->
+                <div class="modal fade" id="updateModal" tabindex="-1" role="dialog" aria-labelledby="updateModalTitle" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="updateModalTitle">Update Employee</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <form [formGroup]="employeeForm" (ngSubmit)="updateData()">
+                                <div class="modal-body">
+                                    <div class="form-group">
+                                        <label for="updateInputFirstName">First Name</label>
+                                        <input type="name" name="first" class="form-control" formControlName="first_name" id="updateInputFirstName" placeholder="First Name" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="updateInputLastName">Last Name</label>
+                                        <input type="name" name="last" class="form-control" formControlName="last_name" id="updateInputFirstName" placeholder="Last Name" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="updateInputCompany">Company</label>
+                                        <input type="name" name="company" class="form-control" formControlName="company" id="updateInputCompany" placeholder="Company" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="updateInputEmail1">Email address</label>
+                                        <input type="email" name="email" class="form-control" formControlName="email" id="updateInputEmail1" aria-describedby="emailHelp" placeholder="Enter email" required>
+                                    </div>
+                                </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                        <button type="submit" class="btn btn-primary" >Save changes</button>
+                                    </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+    </div>
+  </div>
